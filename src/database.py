@@ -19,7 +19,7 @@ class DBManager():
             return {"success": True, "message":"{0} Rows Sucessfully Added".format(len(parameters))}
         except Exception as e:
             self.conn.rollback()
-            return {"success": False, "message":e}
+            return {"success": False, "message":str(e)}
 
     def insert_departments(self,parameters):
         try:
@@ -28,7 +28,7 @@ class DBManager():
             return {"success": True, "message":"{0} Rows Sucessfully Added".format(len(parameters))}
         except Exception as e:
             self.conn.rollback()
-            return {"success": False, "message":e}
+            return {"success": False, "message":str(e)}
 
     def insert_employees(self,parameters):
         try:
@@ -37,4 +37,4 @@ class DBManager():
             return {"success": True, "message":"{0} Rows Sucessfully Added".format(len(parameters))}
         except Exception as e:
             self.conn.rollback()
-            return {"success": False, "message":e}
+            return {"success": False, "message":str(e)}
