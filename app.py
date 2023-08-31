@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 from flask import Response
-from src.source import insert_csv_to_db, check_table
+from src.source import insert_csv_to_db, check_table, query_data
 from io import StringIO
 import json
 
@@ -34,5 +34,19 @@ def upload_employees(table):
             mimetype='application/json'
         )
     return response
+
+@app.route('/query/<query>/<year>',methods=['GET'])
+def get_results(query, year):
+    
+    query_result = query_data(query,year)
+
+    response = Response(
+            response=query_result,
+            status=200,
+            mimetype='application/csv'
+        )
+    
+    return response
+
 
 app.run(debug=True)

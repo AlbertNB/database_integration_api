@@ -11,6 +11,56 @@ class DBManager():
         
         self.cursor = self.conn.cursor()
 
+    def query_1(self, year):
+        query = """
+            SELECT d.department_name,
+            	j.job, 
+            	COUNT(CASE WHEN QUARTER(hired_at) = 1 THEN 1 ELSE 0 END) AS Q1,
+            	COUNT(CASE WHEN QUARTER(hired_at) = 2 THEN 1 ELSE 0 END) AS Q2,
+            	COUNT(CASE WHEN QUARTER(hired_at) = 3 THEN 1 ELSE 0 END) AS Q3,
+            	COUNT(CASE WHEN QUARTER(hired_at) = 4 THEN 1 ELSE 0 END) AS Q4
+            FROM hired_employees AS he
+            LEFT JOIN departments AS d
+            ON he.department_id = d.id 
+            LEFT JOIN jobs AS j
+            ON he.job_id = j.id 
+            WHERE YEAR(hired_at) = %s
+            GROUP BY 1,2
+            ORDER BY 1,2;
+        """
+
+        self.cursor.execute(query,(year,))
+        return self.cursor.description, self.cursor.fetchall()
+
+    def query_2(self, year):
+        query = """
+            WITH hired_by_departments AS(
+                SELECT d.id,
+                    d.department_name,
+                    COUNT(*) AS hired
+                FROM hired_employees AS he
+                LEFT JOIN departments AS d
+                ON he.department_id = d.id
+                WHERE YEAR(hired_at) = %s
+                GROUP BY 1,2
+
+            ),
+
+            most_hiring_departments AS (
+                SELECT id,
+                    department_name,
+                    hired
+                FROM hired_by_departments
+                WHERE hired > (SELECT AVG(hired) FROM hired_by_departments)
+
+            )
+
+            SELECT * FROM most_hiring_departments;
+        """
+
+        self.cursor.execute(query,(year,))
+        return self.cursor.description, self.cursor.fetchall()
+
 
     def insert_jobs(self,parameters):
         try:
