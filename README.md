@@ -39,7 +39,8 @@ curl --request DELETE \
 
 ### QUERY
 
-**GET /query/<query>/<year>**
+**GET /query/\<query\>/\<year\>**
+
 This method returns the result of a query in csv format. You need to provide in path the number of the query(1 or 2) and the year. No body data is required for this method.
 
 There are 2 queries to be used in this method:
