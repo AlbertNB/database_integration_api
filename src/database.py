@@ -52,6 +52,7 @@ class DBManager():
                     hired
                 FROM hired_by_departments
                 WHERE hired > (SELECT AVG(hired) FROM hired_by_departments)
+                ORDER BY 3 DESC
 
             )
 
