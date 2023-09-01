@@ -1,8 +1,6 @@
-CREATE DATABASE `sample_db`;
+USE `sample_db`;
 
--- sample_db.departments definition
-
-CREATE TABLE `departments` (
+CREATE TABLE IF NOT EXISTS `departments` (
   `id` int NOT NULL,
   `department_name` varchar(256) ,
   PRIMARY KEY (`id`)
@@ -10,7 +8,7 @@ CREATE TABLE `departments` (
 
 -- sample_db.hired_employees definition
 
-CREATE TABLE `hired_employees` (
+CREATE TABLE IF NOT EXISTS `hired_employees` (
   `id` int NOT NULL,
   `name` varchar(256),
   `hired_at` datetime,
@@ -21,7 +19,7 @@ CREATE TABLE `hired_employees` (
 
 -- sample_db.jobs definition
 
-CREATE TABLE `jobs` (
+CREATE TABLE IF NOT EXISTS `jobs` (
   `id` int NOT NULL,
   `job` varchar(256),
   PRIMARY KEY (`id`)

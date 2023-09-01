@@ -64,27 +64,54 @@ class DBManager():
 
     def insert_jobs(self,parameters):
         try:
-            self.cursor.executemany("INSERT INTO sample_db.jobs (id, job) VALUES(%s, %s);",parameters)
+            self.cursor.executemany("INSERT IGNORE INTO sample_db.jobs (id, job) VALUES(%s, %s);",parameters)
             self.conn.commit()
-            return {"success": True, "message":"{0} Rows Sucessfully Added".format(len(parameters))}
+            return {"success": True, "message":"Batch Sucessfully Added Ignoring Duplicates"}
         except Exception as e:
             self.conn.rollback()
             return {"success": False, "message":str(e)}
 
     def insert_departments(self,parameters):
         try:
-            self.cursor.executemany("INSERT INTO sample_db.departments (id, department_name) VALUES(%s, %s);",parameters)
+            self.cursor.executemany("INSERT IGNORE INTO sample_db.departments (id, department_name) VALUES(%s, %s);",parameters)
             self.conn.commit()
-            return {"success": True, "message":"{0} Rows Sucessfully Added".format(len(parameters))}
+            return {"success": True, "message":"Batch Sucessfully Added Ignoring Duplicates"}
         except Exception as e:
             self.conn.rollback()
             return {"success": False, "message":str(e)}
 
     def insert_employees(self,parameters):
         try:
-            self.cursor.executemany("INSERT INTO sample_db.hired_employees (id, name, hired_at, department_id, job_id) VALUES(%s, %s, %s, %s, %s);",parameters)
+            self.cursor.executemany("INSERT IGNORE INTO sample_db.hired_employees (id, name, hired_at, department_id, job_id) VALUES(%s, %s, %s, %s, %s);",parameters)
             self.conn.commit()
-            return {"success": True, "message":"{0} Rows Sucessfully Added".format(len(parameters))}
+            return {"success": True, "message":"Batch Sucessfully Added Ignoring Duplicates"}
+        except Exception as e:
+            self.conn.rollback()
+            return {"success": False, "message":str(e)}
+
+    def truncate_employees(self):
+        try:
+            self.cursor.execute("TRUNCATE TABLE sample_db.hired_employees;")
+            self.conn.commit()
+            return {"success": True, "message":"Table 'hired_employees' Sucessfully Truncated"}
+        except Exception as e:
+            self.conn.rollback()
+            return {"success": False, "message":str(e)}
+
+    def truncate_departments(self):
+        try:
+            self.cursor.execute("TRUNCATE TABLE sample_db.departments;")
+            self.conn.commit()
+            return {"success": True, "message":"Table 'departments' Sucessfully Truncated"}
+        except Exception as e:
+            self.conn.rollback()
+            return {"success": False, "message":str(e)}
+
+    def truncate_jobs(self):
+        try:
+            self.cursor.execute("TRUNCATE TABLE sample_db.jobs;")
+            self.conn.commit()
+            return {"success": True, "message":"Table 'jobs' Sucessfully Truncated"}
         except Exception as e:
             self.conn.rollback()
             return {"success": False, "message":str(e)}

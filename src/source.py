@@ -22,6 +22,12 @@ def check_table(table:str):
         pass
     return False
 
+def truncate_table(table:str):
+    db_manager = get_manager()
+    truncate_func = getattr(db_manager, "truncate_{0}".format(table))
+    logs = truncate_func()
+    return logs
+
 def insert_csv_to_db(table:str, file:bytes):
     db_manager = get_manager()
     file_reader = csv.reader(file)
