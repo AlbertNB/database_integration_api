@@ -10,6 +10,7 @@ Docker Compose file creates the API service and Database with all tables that wi
 The API has 3 routes:
 
 ### POST /upload/<table>
+
 This method uploads a csv file into the desired table in DB. To use it you need to provide the CSV file in field `csv_data` using Multipart Form.
 
 Table valid values: `jobs`, `departments`, `employees`.
