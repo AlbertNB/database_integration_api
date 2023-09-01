@@ -9,8 +9,9 @@ Docker Compose file creates the API service and Database with all tables that wi
 
 The API has 3 routes:
 
-### POST /upload/<table>
+### UPLOAD
 
+**POST /upload/<table>**
 This method uploads a csv file into the desired table in DB. To use it you need to provide the CSV file in field `csv_data` using Multipart Form.
 
 Table valid values: `jobs`, `departments`, `employees`.
@@ -23,7 +24,9 @@ curl --request POST \
   --form 'csv_data=path/jobs.csv'
 ```
 
-### DELETE /truncate/<table>
+### TRUNCATE
+
+**DELETE /truncate/<table>**
 This method truncate the desired table. No body data is required for this method.
 
 Table valid values: `jobs`, `departments`, `employees`.
@@ -34,7 +37,9 @@ curl --request DELETE \
   --url http://HOST/truncate/departments
 ```
 
-### GET /query/<query>/<year>
+### QUERY
+
+**GET /query/<query>/<year>**
 This method returns the result of a query in csv format. You need to provide in path the number of the query(1 or 2) and the year. No body data is required for this method.
 
 There are 2 queries to be used in this method:
